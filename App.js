@@ -26,7 +26,7 @@ export default function App() {
       .then((response)=>{
     })
     .catch(error=>{
-        //console.log(error)
+        alert('Dificultades de red, comunicarse con el encargado de TI');
     });
     changeShowCamera();
   };
@@ -52,7 +52,7 @@ export default function App() {
       const assert = await MediaLibrary.createAssetAsync(foto);
       await MediaLibrary.createAlbumAsync("Tutorial", assert);
     } else {
-      console.log("Oh You Missed to give permission");
+      alert('Olvidaste dar los permisos a la aplicacion')
     }
     changeShowCamera();
   }
@@ -71,6 +71,10 @@ export default function App() {
   }
   return (
     <View style={styles.container}>
+      <View>
+        <Text>Seleccion de tipo de factura</Text>
+      </View>
+      <View>
       {showCamera ? 
       (
       <View
@@ -124,7 +128,7 @@ export default function App() {
             style={styles.button}
             >
               <Text
-                title="Take"
+                title="Tomar otra"
                 onPress={()=>{
                   changeShowCamera();
                 }}
@@ -136,7 +140,7 @@ export default function App() {
             style={styles.button}
             >
               <Text
-                title="Take"
+                title="Enviar"
                 onPress={()=>{
                   guardarRemoto();
                 }}
@@ -148,7 +152,7 @@ export default function App() {
             style={styles.button}
             >
               <Text
-                title="Take"
+                title="Guardar local"
                 onPress={()=>{
                   save();
                 }}
@@ -160,20 +164,19 @@ export default function App() {
         </View>
        )
       }
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-
     width: '100%', 
     height: '100%',
   },
   camera:{
     width: '100%', 
     height: '80%',
-
   },
   cameraView:{
     justifyContent: 'center',
