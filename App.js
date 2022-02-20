@@ -11,7 +11,10 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.back);
   const ref = React.createRef();
   const [showCamera, setShowCamera] = useState(true);
-  const [foto, setFoto] = useState('https://static.wikia.nocookie.net/kirby/images/b/b4/Kirby_and_the_Forgotten_Land_Artwork_Kirby.png/revision/latest?cb=202109250153360');
+  const [showPreview, setShowPreview] = useState(false);
+  const [facturas, setFacturas]=useState([]);
+  const [showMenu, setShowMenu] = useState(true);
+  const [foto, setFoto] = useState('');
   const conversion = async (url )=>{
     const base64 = await FileSystem.readAsStringAsync(url, { encoding: 'base64' });
     //console.log(base64);
@@ -22,10 +25,12 @@ export default function App() {
     let fot ={
       image: await conversion(foto)
     };
-    axios.post("http://10.168.241.38:3000/api/fotos", fot)
+    axios.post("http://192.168.1.104:3000/api/fotos", fot)
       .then((response)=>{
+        console.log(response);
     })
     .catch(error=>{
+        console.log(error);
         alert('Dificultades de red, comunicarse con el encargado de TI');
     });
     changeShowCamera();
@@ -33,6 +38,12 @@ export default function App() {
   const changeShowCamera= async()=>{
     //console.log("voy a cambiar el modo");
     {showCamera ? setShowCamera(false) : setShowCamera(true)}
+  };
+  const changeMenu= async()=>{
+    //console.log("voy a cambiar el modo");
+
+    {showMenu ? setShowMenu(false) : setShowMenu(true)}
+    setShowCamera(true);
   };
   const takePicture = async () => {
     //console.log("voy a tomarla y guardar en cache");
@@ -56,10 +67,21 @@ export default function App() {
     }
     changeShowCamera();
   }
+  const buscarFacturas = async()=>{
+    axios.get("http://192.168.1.104:3000/api/facturas")
+      .then((response)=>{
+        setFacturas([...response.data]);
+    })
+    .catch(error=>{
+        console.log(error);
+        alert('Dificultades de red, comunicarse con el encargado de TI');
+    });
+  };
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
+      await buscarFacturas();
     })();
   }, []);
 
@@ -72,98 +94,146 @@ export default function App() {
   return (
     <View style={styles.container}>
       <View>
-        <Text>Seleccion de tipo de factura</Text>
-      </View>
-      <View>
-      {showCamera ? 
-      (
-      <View
-      style={styles.container} 
-      >
-        <View
-        style={styles.cameraView} 
-        >
-          <Camera 
-          style={styles.camera} 
-          type={type}
-          ref={ref}>
-          </Camera>
-        </View>
-        <View
-        style={styles.buttomView} 
-        >
-          <TouchableOpacity
-          style={styles.button}
-          >
-            <Text
-              title="Take"
-              onPress={()=>{
-                takePicture();
-              }}
-            >
-              Tomar foto
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      ) 
-       : (
-        <View
-        style={styles.container}
-        >
+        {showMenu?(
           <View
-          style={styles.cameraView} 
+          style={styles.container2}
           >
-            <Image
-            style={styles.camera}
-            source={{
-              uri: foto,
-            }}
-            />
+            <View
+          style={styles.cameraView}
+          >
+            <Text>Menú bien perrón</Text>
+            {facturas.map(r =>
+              <TouchableOpacity
+            style={styles.button2}
+            onPress={()=>{
+              changeMenu();
+            }}>
+              <Text>
+               { r.nombre}
+              </Text>
+            </TouchableOpacity>
+            )}
           </View>
-          <View
-          style={styles.buttomView} 
+          </View>
+          ):(
+            showCamera ? (
+              <View
+              style={styles.container} 
+              >
+                <View
+                style={styles.cameraView} 
+                >
+                  <Camera 
+                  style={styles.camera} 
+                  type={type}
+                  ref={ref}>
+                  </Camera>
+                </View>
+                <View
+                style={styles.buttomView} 
+                >
+                  <TouchableOpacity
+                  style={styles.button}
+                  >
+                    <Text
+                      title="Take"
+                      onPress={()=>{
+                        takePicture();
+                      }}
+                    >
+                      Tomar foto
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                  style={styles.button3}
+                  >
+                    <Text
+                      title="menu"
+                      onPress={()=>{
+                        changeMenu();
+                      }}
+                    >
+                      menú 
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ):(
+              <View
+          style={styles.container}
           >
+            <View
+            style={styles.cameraView} 
+            >
+              {foto.length>0?(
+                <Image
+                style={styles.camera}
+                source={{
+                  uri: foto,
+                }}
+                />
+              ):(
+                <Text>
+                  No se ha encontrado la imagen
+                </Text>
+              )}
+            </View>
+            <View
+            style={styles.buttomView} 
+            >
+              <TouchableOpacity
+              style={styles.button}
+              >
+                <Text
+                  title="Tomar otra"
+                  onPress={()=>{
+                    changeShowCamera();
+                  }}
+                >
+                  Tomar otra
+                </Text>
+            </TouchableOpacity>
             <TouchableOpacity
-            style={styles.button}
+              style={styles.button}
+              >
+                <Text
+                  title="Enviar"
+                  onPress={()=>{
+                    guardarRemoto();
+                  }}
+                >
+                  Subir
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.button}
+              >
+                <Text
+                  title="Guardar local"
+                  onPress={()=>{
+                    save();
+                  }}
+                >
+                  Guardar local
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            style={styles.button3}
             >
               <Text
-                title="Tomar otra"
+                title="menu"
                 onPress={()=>{
-                  changeShowCamera();
+                  changeMenu();
                 }}
               >
-                Tomar otra
+                menú 
               </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            >
-              <Text
-                title="Enviar"
-                onPress={()=>{
-                  guardarRemoto();
-                }}
-              >
-                Subir
-              </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            >
-              <Text
-                title="Guardar local"
-                onPress={()=>{
-                  save();
-                }}
-              >
-                Guardar local
-              </Text>
-          </TouchableOpacity>
+            </TouchableOpacity>
+            </View>
           </View>
-        </View>
-       )
-      }
+            )
+          )
+        }
       </View>
     </View>
   );
@@ -173,6 +243,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     width: '100%', 
     height: '100%',
+  },
+  container2: {
+    backgroundColor: '#fff',
+    width: '100%', 
+    height: '100%',
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   camera:{
     width: '100%', 
@@ -188,6 +265,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   button:{
+    width: 75,
+    height: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    backgroundColor: '#ccc',
+  },
+  button2:{
+    width: 200,
+    height: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 100,
+    backgroundColor: '#ccc',
+  },
+  button3:{
     width: 75,
     height: 75,
     justifyContent: 'center',
