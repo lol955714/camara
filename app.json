@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "camara",
-    "slug": "camara",
+    "name": "Elemus scanner",
+    "slug": "Elemus scanner",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/splash.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4b545d"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,10 +20,6 @@
       "supportsTablet": true
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
       "package": "camara.lol.prueba"
     },
     "web": {

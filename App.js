@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
   container: {
     backgroundColor: '#4b545d',
@@ -360,14 +360,14 @@ const styles = StyleSheet.create({
   },
   textEncabezado: {
     fontSize: 40,
-    color: '#000',
+    color: '#fff',
   },
   textBoton: {
     fontSize: 30,
     color: '#000',
   },
   container2: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4b545d',
     width: '100%', 
     height: '100%',
     alignContent: 'center',
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
   button2:{
     width: 200,
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
   button3:{
     width: 75,
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
   button6:{
     width: 350,
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
   button4:{
     width: 75,
@@ -429,6 +429,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 100,
-    backgroundColor: '#ccc',
+    backgroundColor: '#c9e9b6',
   },
 });
