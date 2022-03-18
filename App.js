@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; 
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import { Entypo } from '@expo/vector-icons'; 
 import { CrossBusyIndicator } from 'react-native-cross-components';
 import axios from 'axios';
 import * as MediaLibrary from 'expo-media-library';
@@ -149,7 +151,7 @@ export default function App() {
           >
             <Text
             style={styles.textEncabezado}
-            >{`seleccion el tipo de factura a procesar \n`}</Text>
+            >{`Seleccion el tipo de factura a procesar \n`}</Text>
             {facturas.length>0?
             facturas.map(r =>
               <View >
@@ -188,14 +190,13 @@ export default function App() {
                    <TouchableOpacity
                   style={styles.back}
                   >
-                    <Text
-                      title="menu"
-                      onPress={()=>{
-                        changeMenu();
-                      }}
-                    >
-                      menú 
-                    </Text>
+                    <Entypo 
+                    name="cross" 
+                    size={45} 
+                    color="black" 
+                    onPress={()=>{
+                      changeMenu();
+                    }}/>
                   </TouchableOpacity>
                 </View>
                   <Camera 
@@ -210,14 +211,14 @@ export default function App() {
                   <TouchableOpacity
                   style={styles.button}
                   >
-                    <Text
-                      title="Take"
+                    <AntDesign 
+                      name="camera" 
+                      size={40} 
+                      color="black" 
                       onPress={()=>{
                         takePicture();
                       }}
-                    >
-                      Tomar foto
-                    </Text>
+                      />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -234,26 +235,24 @@ export default function App() {
                    <TouchableOpacity
                   style={styles.back}
                   >
-                    <Text
-                      title="menu"
-                      onPress={()=>{
-                        changeMenu();
-                      }}
-                    >
-                      menú 
-                    </Text>
+                    <Entypo 
+                    name="cross" 
+                    size={45} 
+                    color="black" 
+                    onPress={()=>{
+                      changeMenu();
+                    }}/>
                   </TouchableOpacity>
                   <TouchableOpacity
                   style={styles.back}
                   >
-                    <Text
-                      title="Tomar otra"
+                    <Entypo 
+                      name="cw" 
+                      size={45} 
+                      color="black" 
                       onPress={()=>{
                         changeShowCamera();
-                      }}
-                    >
-                      Tomar otra
-                    </Text>
+                      }}/>
                 </TouchableOpacity>
                 </View>
               {foto.length>0?(
@@ -315,27 +314,25 @@ export default function App() {
             <TouchableOpacity
               style={styles.button}
               >
-                <Text
-                  title="Enviar"
+                <AntDesign 
+                  name="form" 
+                  size={45} 
+                  color="black" 
                   onPress={()=>{
                     setPrompt(true);
-                  }}
-                >
-                  Comentario
-                </Text>
+                  }}/>
             </TouchableOpacity>
             {comentarioIsSet?
             <TouchableOpacity
               style={styles.button}
               >
-                <Text
-                  title="Enviar"
+                <AntDesign 
+                  name="upload" 
+                  size={24} 
+                  color="black" 
                   onPress={()=>{
                     guardarRemoto();
-                  }}
-                >
-                  Subir
-                </Text>
+                  }}/>
             </TouchableOpacity>:
             <Text></Text>}
             </View>
