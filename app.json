@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Elemus scanner",
-    "slug": "Elemus scanner",
+    "slug": "Elemus_scanner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
